@@ -1,5 +1,7 @@
 {
   "name": "gpt-translator",
+  "author": "Andrés Florez",
+  "description": "GPT Translator is a web app that translates text from one language to another using the OpenAI API (CHAT GPT).",
   "version": "0.1.0",
   "private": true,
   "scripts": {
