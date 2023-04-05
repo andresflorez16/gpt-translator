@@ -4,6 +4,7 @@
     "./node_modules/standard/eslintrc.json"
   ],
   "rules": {
-    "no-throw-literal": "off"
+    "no-throw-literal": "off",
+    "react-hooks/exhaustive-deps": "off"
   }
 }
