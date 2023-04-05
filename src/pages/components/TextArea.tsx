@@ -21,6 +21,7 @@ export const TextArea: React.FC<Props> = ({ loading, onChange, type, value }) =>
   return (
     <textarea
       className={`h-52 border-none resize-none rounded-md p-2 outline-none ${type === 'to' ? 'bg-gray-200' : ''}`}
+      disabled={type === 'to'}
       value={value}
       onChange={handleChange}
       autoFocus={type === 'from'}

@@ -5,6 +5,7 @@ import useStore from '@/pages/hooks/useStore'
 import { AUTO_LANGUAGE } from '@/constants'
 import { TextArea } from './components/TextArea'
 import Layout from './components/Layout'
+import { useEffect } from 'react'
 
 const inter = Inter({ weight: '400', subsets: ['latin'], display: 'swap', variable: '--font-inter' })
 
@@ -21,6 +22,13 @@ export default function Home () {
     setFromLanguage,
     setToLanguage
   } = useStore()
+
+  useEffect(() => {
+    fetch('api/translator', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fromLanguage, toLanguage, text }) as any })
+      .then(res => res.json())
+      .then(data => console.log(data))
+      .catch(err => console.log(err))
+  }, [])
   return (
     <Layout>
       <main className={`min-h-screen max-w-2xl grid place-items-center m-auto ${inter.variable}`}>
