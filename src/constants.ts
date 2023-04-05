@@ -4,4 +4,10 @@ export const SUPORTED_LANGUAGES = {
   ja: 'Japanese'
 }
 
+export const VOICE_FOR_LANGUAGE = {
+  en: 'en-GB',
+  es: 'es-MX',
+  ja: 'ja-JP'
+}
+
 export const AUTO_LANGUAGE = 'auto'
