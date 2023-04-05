@@ -1,11 +1,12 @@
-import { ArrowsIcon } from './components/Icons'
+import { ArrowsIcon, SpeakerIcon } from './components/Icons'
 import { Inter } from 'next/font/google'
 import { LangSelector } from './components/LangSelector'
 import useStore from '@/pages/hooks/useStore'
-import { AUTO_LANGUAGE } from '@/constants'
+import { AUTO_LANGUAGE, VOICE_FOR_LANGUAGE } from '@/constants'
 import { TextArea } from './components/TextArea'
 import Layout from './components/Layout'
 import { useEffect } from 'react'
+import { useDebounce } from './hooks/useDebounce'
 
 const inter = Inter({ weight: '400', subsets: ['latin'], display: 'swap', variable: '--font-inter' })
 
@@ -23,12 +24,24 @@ export default function Home () {
     setToLanguage
   } = useStore()
 
+  const debounceText = useDebounce(text, 300)
+
   useEffect(() => {
+    if (debounceText === '') return
+
     fetch('api/translator', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fromLanguage, toLanguage, text }) as any })
       .then(res => res.json())
-      .then(data => console.log(data))
-      .catch(err => console.log(err))
-  }, [])
+      .then(data => setResult(data.result))
+      .catch(err => setResult(err))
+  }, [debounceText, fromLanguage, toLanguage])
+
+  const handleSpeak = () => {
+    const utterance = new SpeechSynthesisUtterance(result)
+    utterance.lang = VOICE_FOR_LANGUAGE[toLanguage]
+    utterance.rate = 0.9
+    speechSynthesis.speak(utterance)
+  }
+
   return (
     <Layout>
       <main className={`min-h-screen max-w-2xl grid place-items-center m-auto ${inter.variable}`}>
@@ -63,6 +76,9 @@ export default function Home () {
                 loading={loading}
               />
             </div>
+          </div>
+          <div className='float-right'>
+            <button onClick={handleSpeak}><SpeakerIcon /></button>
           </div>
         </section>
       </main>
