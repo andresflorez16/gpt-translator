@@ -31,7 +31,10 @@ export default function Home () {
 
     fetch('api/translator', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fromLanguage, toLanguage, text }) as any })
       .then(res => res.json())
-      .then(data => setResult(data.result))
+      .then(data => {
+        if (!data || data === null) return
+        setResult(data.result)
+      })
       .catch(err => setResult(err))
   }, [debounceText, fromLanguage, toLanguage])
 
