@@ -36,7 +36,7 @@ export default async function translator (
     },
     {
       role: ChatCompletionRequestMessageRoleEnum.User,
-      content: 'How are you? {{auto}} [[Deutsch]]'
+      content: 'How are you? {{auto}} [[Japanese]]'
     },
     {
       role: ChatCompletionRequestMessageRoleEnum.Assistant,
@@ -55,7 +55,7 @@ export default async function translator (
   const fromCode = fromLanguage === 'auto' ? 'auto' : SUPORTED_LANGUAGES[fromLanguage]
   const toCode = SUPORTED_LANGUAGES[toLanguage]
 
-  const completion = await openai.createChatCompletion({
+  return openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
     messages: [
       ...messages,
@@ -65,6 +65,12 @@ export default async function translator (
       }
     ]
   })
+    .then((completion) => {
+      if (!completion.data.choices[0]?.message?.content) throw { message: 'No se pudo traducir el texto' }
 
-  return res.status(200).json({ result: completion.data.choices[0].message })
+      return res.status(200).json({ result: completion.data.choices[0]?.message?.content })
+    })
+    .catch(err => {
+      return res.status(422).json({ error: err.message || 'Error with translation' })
+    })
 }
