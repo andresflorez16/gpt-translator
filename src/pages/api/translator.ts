@@ -71,6 +71,7 @@ export default async function translator (
       return res.status(200).json({ result: completion.data.choices[0]?.message?.content })
     })
     .catch(err => {
-      return res.status(422).json({ error: err.message || 'Error with translation' })
+      const message = `${err?.response?.data?.error?.message} 😓` || err.message || 'Error with translation 😰'
+      return res.json({ message, code: 422 })
     })
 }
