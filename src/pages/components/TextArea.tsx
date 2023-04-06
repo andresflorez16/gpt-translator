@@ -13,7 +13,7 @@ const getPlaceholder = ({ type, loading }: { type: 'from' | 'to', loading?: bool
   return 'Translate'
 }
 
-export const TextArea: React.FC<Props> = ({ loading, onChange, type, value }) => {
+const TextArea: React.FC<Props> = ({ loading, onChange, type, value }) => {
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     onChange(e.target.value)
   }
@@ -29,3 +29,5 @@ export const TextArea: React.FC<Props> = ({ loading, onChange, type, value }) =>
     />
   )
 }
+
+export default TextArea

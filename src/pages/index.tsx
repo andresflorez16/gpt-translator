@@ -1,12 +1,13 @@
-import { ArrowsIcon, SpeakerIcon } from './components/Icons'
+import ArrowsIcon from './components/icons/ArrowsIcon'
+import SpeakerIcon from './components/icons/SpeakerIcon'
 import { Inter } from 'next/font/google'
-import { LangSelector } from './components/LangSelector'
+import LangSelector from './components/LangSelector'
 import useStore from '@/pages/hooks/useStore'
 import { AUTO_LANGUAGE, VOICE_FOR_LANGUAGE } from '@/constants'
-import { TextArea } from './components/TextArea'
+import TextArea from './components/TextArea'
 import Layout from './components/Layout'
 import { useEffect } from 'react'
-import { useDebounce } from './hooks/useDebounce'
+import useDebounce from './hooks/useDebounce'
 
 const inter = Inter({ weight: '400', subsets: ['latin'], display: 'swap', variable: '--font-inter' })
 

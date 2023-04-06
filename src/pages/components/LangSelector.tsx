@@ -6,7 +6,7 @@ type Props =
   | { type: 'from', value: FromLanguage, onChange: (value: FromLanguage) => void }
   | { type: 'to', value: Languages, onChange: (value: Languages) => void }
 
-export const LangSelector: React.FC<Props> = ({ onChange, value, type }) => {
+const LangSelector: React.FC<Props> = ({ onChange, value, type }) => {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onChange(e.target.value as Languages)
   }
@@ -22,3 +22,5 @@ export const LangSelector: React.FC<Props> = ({ onChange, value, type }) => {
     </select>
   )
 }
+
+export default LangSelector
