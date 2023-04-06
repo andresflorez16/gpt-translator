@@ -24,7 +24,7 @@ export default function Home () {
     setToLanguage
   } = useStore()
 
-  const debounceText = useDebounce(text, 300)
+  const debounceText = useDebounce({ value: text, delay: 300 })
 
   useEffect(() => {
     if (debounceText === '') return
@@ -33,9 +33,12 @@ export default function Home () {
       .then(res => res.json())
       .then(data => {
         if (!data || data === null) return
+        if (data.code === 422) {
+          setResult(data.message)
+          return
+        }
         setResult(data.result)
       })
-      .catch(err => setResult(err))
   }, [debounceText, fromLanguage, toLanguage])
 
   const handleSpeak = () => {
@@ -47,10 +50,10 @@ export default function Home () {
 
   return (
     <Layout>
-      <main className={`min-h-screen max-w-2xl grid place-items-center m-auto ${inter.variable}`}>
+      <main className={`h-screen w-full mt-5 md:mt-0 grid place-items-center ${inter.variable}`}>
         <section>
           <h2 className='text-4xl font-inter text-center'>GPT Translator</h2>
-          <div className='flex gap-2 my-8'>
+          <div className='flex flex-col md:flex-row gap-2 mt-8'>
             <div className='flex flex-col gap-2'>
               <LangSelector
                 type='from'
@@ -80,7 +83,7 @@ export default function Home () {
               />
             </div>
           </div>
-          <div className='float-right'>
+          <div className=''>
             <button onClick={handleSpeak}><SpeakerIcon /></button>
           </div>
         </section>

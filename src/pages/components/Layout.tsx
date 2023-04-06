@@ -6,6 +6,7 @@ interface Props {
 }
 
 const Layout: React.FC<Props> = ({ children }) => {
+  const year = new Date().getFullYear()
   return (
     <>
       <Head>
@@ -15,6 +16,10 @@ const Layout: React.FC<Props> = ({ children }) => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       {children}
+      {/* create a footer  */}
+      <footer className='static md:absolute w-full bottom-0 flex justify-center items-center h-10 font-inter bg-gray-800 text-white'>
+        <p>💖️ {year} Made with love Andrés Florez</p>
+      </footer>
     </>
   )
 }
